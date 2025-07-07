@@ -1,1 +1,1 @@
-# fastapi_by_myself
+# school django project

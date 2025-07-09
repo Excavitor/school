@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - School Project</title>
+    <title>Students - School Management System</title>
     <style>
         * {
             margin: 0;
@@ -26,9 +26,9 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
+
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
@@ -67,14 +67,14 @@
             z-index: 1;
         }
 
-        .products-grid {
+        .students-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             padding: 40px 30px;
         }
 
-        .product-card {
+        .student-card {
             background: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -84,56 +84,91 @@
             border: 2px solid transparent;
         }
 
-        .product-card:hover {
+        .student-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #4facfe;
+            border-color: #ff6b6b;
         }
 
-        .product-card::before {
+        .student-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
         }
 
-        .product-header {
+        .student-header {
             padding: 25px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
             color: white;
             text-align: center;
+            position: relative;
         }
 
-        .product-name {
+        .student-name {
             font-size: 1.4em;
             font-weight: 600;
             margin-bottom: 8px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        .product-body {
+        .student-roll {
+            font-size: 1em;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .student-body {
             padding: 25px;
         }
 
-        .product-description {
-            color: #666;
-            line-height: 1.6;
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             margin-bottom: 20px;
-            font-size: 0.95em;
         }
 
-        .product-details {
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #6c5ce7;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.1em;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .student-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .product-price {
-            font-size: 1.5em;
+        .student-class {
+            font-size: 1.3em;
             font-weight: 700;
             color: #2d3748;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -142,7 +177,7 @@
             background-clip: text;
         }
 
-        .product-stock {
+        .student-status {
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9em;
@@ -151,41 +186,45 @@
             letter-spacing: 0.5px;
         }
 
-        .stock-available {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-            color: #2d5a27;
-        }
-
-        .stock-low {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-            color: #8b4513;
-        }
-
-        .stock-out {
-            background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);
+        .status-active {
+            background: linear-gradient(135deg, #00b894 0%, #55efc4 100%);
             color: white;
         }
 
-        .no-products {
+        .status-inactive {
+            background: linear-gradient(135deg, #e17055 0%, #fab1a0 100%);
+            color: white;
+        }
+
+        .enrollment-date {
+            font-size: 0.9em;
+            color: #666;
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .no-students {
             text-align: center;
             padding: 60px 30px;
             color: #666;
         }
 
-        .no-products h2 {
+        .no-students h2 {
             font-size: 2em;
             margin-bottom: 15px;
             color: #4a5568;
         }
 
-        .no-products p {
+        .no-students p {
             font-size: 1.1em;
             line-height: 1.6;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .products-grid {
+            .students-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
                 padding: 20px;
@@ -195,10 +234,28 @@
                 font-size: 2em;
             }
             
-            .product-details {
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .student-details {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .student-card {
+                margin: 0 10px;
+            }
+            
+            .student-header {
+                padding: 20px;
+            }
+            
+            .student-body {
+                padding: 20px;
             }
         }
     </style>
@@ -206,36 +263,48 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Our Products</h1>
-            <p>Discover our amazing collection of products</p>
+            <h1>Student Directory</h1>
+            <p>Manage and view all enrolled students</p>
         </div>
 
-        <div class="products-grid">
-            {% for product in products %}
-            <div class="product-card">
-                <div class="product-header">
-                    <div class="product-name">{{ product.name }}</div>
+        <div class="students-grid">
+            {% for student in students %}
+            <div class="student-card">
+                <div class="student-header">
+                    <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
+                    <!-- <div class="student-name">{{ student.full_name }}</div> -->
+                    <div class="student-roll">Roll #{{ student.roll }}</div>
                 </div>
-                <div class="product-body">
-                    <div class="product-description">
-                        {{ product.description|default:"No description available" }}
+                <div class="student-body">
+                    <div class="student-info">
+                        <div class="info-item">
+                            <div class="info-label">First Name</div>
+                            <div class="info-value">{{ student.first_name }}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Last Name</div>
+                            <div class="info-value">{{ student.last_name }}</div>
+                        </div>
                     </div>
-                    <div class="product-details">
-                        <div class="product-price">${{ product.price }}</div>
-                        <div class="product-stock {% if product.stock > 10 %}stock-available{% elif product.stock > 0 %}stock-low{% else %}stock-out{% endif %}">
-                            {% if product.stock > 0 %}
-                                {{ product.stock }} in stock
+                    <div class="student-details">
+                        <div class="student-class">Class {{ student.enrolled_class }}</div>
+                        <div class="student-status {% if student.current_status %}status-active{% else %}status-inactive{% endif %}">
+                            {% if student.current_status %}
+                                Active
                             {% else %}
-                                Out of stock
+                                Inactive
                             {% endif %}
                         </div>
+                    </div>
+                    <div class="enrollment-date">
+                        Enrolled: {{ student.created_at|date:"F d, Y" }}
                     </div>
                 </div>
             </div>
             {% empty %}
-            <div class="no-products">
-                <h2>No Products Available</h2>
-                <p>We're currently updating our inventory. Please check back soon for new products!</p>
+            <div class="no-students">
+                <h2>No Students Found</h2>
+                <p>No students are currently enrolled in the system. Add students to get started!</p>
             </div>
             {% endfor %}
         </div>
